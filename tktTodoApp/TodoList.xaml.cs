@@ -34,21 +34,21 @@ namespace tktTodoApp
             base.OnAppearing();
 
             // Set syncItems to true in order to synchronize the data on startup when running in offline mode
-            await RefreshItems(true, syncItems: false);
+            await RefreshItems(true, syncItems: true);
         }
 
         // Data methods
         async Task AddItem(TodoItem item)
         {
             await manager.SaveTaskAsync(item);
-            todoList.ItemsSource = await manager.GetTodoItemsAsync();
+            todoList.ItemsSource = await manager.GetTodoItemsAsync(true);
         }
 
         async Task CompleteItem(TodoItem item)
         {
             item.Done = true;
             await manager.SaveTaskAsync(item);
-            todoList.ItemsSource = await manager.GetTodoItemsAsync();
+            todoList.ItemsSource = await manager.GetTodoItemsAsync(true);
         }
 
         public async void OnAdd(object sender, EventArgs e)
