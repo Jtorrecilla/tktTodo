@@ -1,0 +1,2 @@
+C:\Users\jtorrecip\Downloads\tktTodoApp_Xamarin_Forms\tktTodoApp\tktTodoApp.csproj;neutral
+C:\Users\jtorrecip\Downloads\tktTodoApp_Xamarin_Forms\WinApp\tktTodoApp.WinApp.csproj;x86
