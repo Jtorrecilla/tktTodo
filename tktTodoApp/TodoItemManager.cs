@@ -2,7 +2,7 @@
 // to all projects in the solution and uncomment the symbol definition OFFLINE_SYNC_ENABLED
 // For Xamarin.iOS, also edit AppDelegate.cs and uncomment the call to SQLitePCL.CurrentPlatform.Init()
 // For more information, see: http://go.microsoft.com/fwlink/?LinkId=620342 
-#define OFFLINE_SYNC_ENABLED
+//#define OFFLINE_SYNC_ENABLED
 
 using System;
 using System.Collections.Generic;
