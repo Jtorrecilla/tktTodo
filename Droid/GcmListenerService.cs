@@ -26,7 +26,7 @@ namespace ClientApp
 
             var notificationBuilder = new Notification.Builder(this)
                 .SetSmallIcon(Resource.Drawable.icon)
-                .SetContentTitle("GCM Message")
+                .SetContentTitle("Tokiota TodoApp Message")
                 .SetContentText(message)
                 .SetAutoCancel(true)
                 .SetContentIntent(pendingIntent);
