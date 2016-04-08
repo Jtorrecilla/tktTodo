@@ -10,10 +10,12 @@ namespace ClientApp
     [Service(Exported = false)]
     class RegistrationIntentService : IntentService
     {
-        private const string GCM_SENDER_ID = "56068374112";
         static object locker = new object();
 
-        public RegistrationIntentService() : base("RegistrationIntentService") { }
+        public RegistrationIntentService()
+            : base("RegistrationIntentService")
+        {
+        }
 
         protected override void OnHandleIntent(Intent intent)
         {
@@ -23,7 +25,7 @@ namespace ClientApp
                 lock (locker)
                 {
                     var instanceID = InstanceID.GetInstance(this);
-                    var token = instanceID.GetToken(GCM_SENDER_ID, GoogleCloudMessaging.InstanceIdScope, null);
+                    var token = instanceID.GetToken(tktTodoApp.Constants.SenderID, GoogleCloudMessaging.InstanceIdScope, null);
 
                     Log.Info("RegistrationIntentService", "GCM Registration Token: " + token);
                     SendRegistrationToAppServer(token);
