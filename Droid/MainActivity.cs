@@ -9,29 +9,66 @@ using Android.Widget;
 using Android.OS;
 using Android.Util;
 using Gcm.Client;
-    
+using Microsoft.WindowsAzure.MobileServices;
+using System.Threading.Tasks;
+
 namespace tktTodoApp.Droid
 {
-	[Activity (Label = "tktTodoApp.Droid", 
-		Icon = "@drawable/icon", 
-		MainLauncher = true, 
-		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
-		Theme = "@android:style/Theme.Holo.Light")]
-	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
-	{
+    [Activity(Label = "tktTodoApp.Droid",
+        Icon = "@drawable/icon",
+        MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+        Theme = "@android:style/Theme.Holo.Light")]
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity, IAuthenticate
+    {
         public static MainActivity instance;
+        private MobileServiceUser user;
 
-        protected override void OnCreate (Bundle bundle)
-		{
+        protected override void OnCreate(Bundle bundle)
+        {
             instance = this;
 
             base.OnCreate(bundle);
 
-            global::Xamarin.Forms.Forms.Init (this, bundle);
-			Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
-			LoadApplication (new App ());
+            global::Xamarin.Forms.Forms.Init(this, bundle);
+            Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
+            App.Init((IAuthenticate)this);
+
+            LoadApplication(new App());
 
             RegisterWithGCM();
+        }
+
+        public async Task<bool> AuthenticateUser()
+        {
+            var success = false;
+            try
+            {
+                // Sign in with Facebook login using a server-managed flow.
+                //user = await TodoItemManager.DefaultManager.CurrentClient.LoginAsync(this,
+                //    MobileServiceAuthenticationProvider.Google);
+
+                user = await TodoItemManager.DefaultManager.CurrentClient.LoginAsync(
+                    MobileServiceAuthenticationProvider.Google,
+                    new Newtonsoft.Json.Linq.JObject("'access_token':'<access_token>'"));
+                CreateAndShowDialog(string.Format("you are now logged in - {0}", user.UserId), "Logged in!");
+
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                CreateAndShowDialog(ex.Message, "Authentication failed");
+            }
+            return success;
+        }
+
+        private void CreateAndShowDialog(String message, String title)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.SetMessage(message);
+            builder.SetTitle(title);
+            builder.Create().Show();
         }
 
         private void RegisterWithGCM()
