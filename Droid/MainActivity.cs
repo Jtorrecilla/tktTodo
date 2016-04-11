@@ -45,12 +45,9 @@ namespace tktTodoApp.Droid
             try
             {
                 // Sign in with Facebook login using a server-managed flow.
-                //user = await TodoItemManager.DefaultManager.CurrentClient.LoginAsync(this,
-                //    MobileServiceAuthenticationProvider.Google);
+                user = await TodoItemManager.DefaultManager.CurrentClient.LoginAsync(this,
+                    MobileServiceAuthenticationProvider.Facebook);
 
-                user = await TodoItemManager.DefaultManager.CurrentClient.LoginAsync(
-                    MobileServiceAuthenticationProvider.Google,
-                    new Newtonsoft.Json.Linq.JObject("'access_token':'<access_token>'"));
                 CreateAndShowDialog(string.Format("you are now logged in - {0}", user.UserId), "Logged in!");
 
                 success = true;
