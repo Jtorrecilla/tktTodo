@@ -46,7 +46,7 @@ namespace tktTodoApp.Droid
             {
                 // Sign in with Facebook login using a server-managed flow.
                 user = await TodoItemManager.DefaultManager.CurrentClient.LoginAsync(this,
-                    MobileServiceAuthenticationProvider.Facebook);
+                    MobileServiceAuthenticationProvider.Twitter);
 
                 CreateAndShowDialog(string.Format("you are now logged in - {0}", user.UserId), "Logged in!");
 
